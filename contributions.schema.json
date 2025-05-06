@@ -1,0 +1,260 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"version": {
+			"type": "number",
+			"enum": [1]
+		},
+		"commands": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"required": ["label"],
+				"properties": {
+					"label": {
+						"description": "命令的标签/标题",
+						"type": "string"
+					},
+					"icon": {
+						"description": "（可选）用于在 UI 中表示命令的图标。可以是文件路径、包含深色和浅色主题文件路径的对象，或主题图标引用，如 `\\$(zap)`",
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "object",
+								"properties": {
+									"light": {
+										"description": "使用浅色主题时的图标路径",
+										"type": "string"
+									},
+									"dark": {
+										"description": "使用深色主题时的图标路径",
+										"type": "string"
+									}
+								}
+							}
+						]
+					},
+					"enablement": {
+						"description": "（可选）在 UI（菜单和快捷键）中启用命令所需满足的条件。不阻止通过其他方式（如 `executeCommand`-api）执行命令",
+						"type": "string"
+					},
+					"commandPalette": {
+						"description": "（可选）指定命令是否应显示在命令面板中。使用 true 始终显示，或使用 when 条件有条件显示",
+						"oneOf": [{ "type": "boolean", "enum": [true] }, { "type": "string" }]
+					},
+					"menus": {
+						"description": "将此命令包含在菜单中的菜单项，按菜单位置组织",
+						"type": "object",
+						"propertyNames": {
+							"$ref": "#/$defs/menuLocations"
+						},
+						"additionalProperties": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"when": {
+										"description": "显示此项所需满足的条件",
+										"type": "string"
+									},
+									"group": {
+										"description": "此项所属的分组",
+										"type": "string"
+									},
+									"order": {
+										"description": "分组项的排序",
+										"type": "number"
+									},
+									"alt": {
+										"description": "按下 ALT 键调用时运行的备用命令",
+										"type": "string"
+									}
+								},
+								"additionalProperties": false
+							}
+						}
+					},
+					"keybindings": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"args": {
+									"description": "执行命令时传递的参数"
+								},
+								"key": {
+									"description": "按键或按键序列（用加号分隔按键，用空格分隔序列，例如 Ctrl+O 和 Ctrl+L L 表示组合键）",
+									"type": "string"
+								},
+								"mac": {
+									"description": "Mac 专用按键或按键序列",
+									"type": "string"
+								},
+								"linux": {
+									"description": "Linux 专用按键或按键序列",
+									"type": "string"
+								},
+								"win": {
+									"description": "Windows 专用按键或按键序列",
+									"type": "string"
+								},
+								"when": {
+									"description": "按键激活时的条件",
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"submenus": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"required": ["label"],
+				"properties": {
+					"label": {
+						"description": "子菜单的标签/标题",
+						"type": "string"
+					},
+					"icon": {
+						"description": "（可选）用于在 UI 中表示子菜单的图标。可以是文件路径、包含深色和浅色主题文件路径的对象，或主题图标引用，如 `\\$(zap)`",
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "object",
+								"properties": {
+									"light": {
+										"description": "使用浅色主题时的图标路径",
+										"type": "string"
+									},
+									"dark": {
+										"description": "使用深色主题时的图标路径",
+										"type": "string"
+									}
+								}
+							}
+						]
+					},
+					"menus": {
+						"description": "将此子菜单包含在菜单中的菜单项，按菜单位置组织",
+						"type": "object",
+						"propertyNames": {
+							"$ref": "#/$defs/menuLocations"
+						},
+						"additionalProperties": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"when": {
+										"description": "显示此项所需满足的条件",
+										"type": "string"
+									},
+									"group": {
+										"description": "此项所属的分组",
+										"type": "string"
+									},
+									"order": {
+										"description": "分组项的排序",
+										"type": "number"
+									},
+									"alt": {
+										"description": "按下 ALT 键调用时运行的备用命令",
+										"type": "string"
+									}
+								},
+								"additionalProperties": false
+							}
+						}
+					}
+				}
+			}
+		},
+		"keybindings": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": ["command", "key"],
+				"properties": {
+					"command": {
+						"description": "要执行的命令",
+						"type": "string"
+					},
+					"args": {
+						"description": "执行命令时传递的参数"
+					},
+					"key": {
+						"description": "按键或按键序列（用加号分隔按键，用空格分隔序列，例如 Ctrl+O 和 Ctrl+L L 表示组合键）",
+						"type": "string"
+					},
+					"mac": {
+						"description": "Mac 专用按键或按键序列",
+						"type": "string"
+					},
+					"linux": {
+						"description": "Linux 专用按键或按键序列",
+						"type": "string"
+					},
+					"win": {
+						"description": "Windows 专用按键或按键序列",
+						"type": "string"
+					},
+					"when": {
+						"description": "按键激活时的条件",
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"$defs": {
+		"menuLocations": {
+			"anyOf": [
+				{
+					"type": "string",
+					"enum": [
+						"commandPalette",
+						"comments/comment/title",
+						"comments/comment/context",
+						"comments/commentThread/title",
+						"comments/commentThread/context",
+						"editor/title",
+						"editor/title/context",
+						"editor/title/run",
+						"editor/context",
+						"editor/context/copy",
+						"editor/lineNumber/context",
+						"explorer/context",
+						"extension/context",
+						"git.commit",
+						"menuBar/edit/copy",
+						"scm/title",
+						"scm/sourceControl",
+						"scm/change/title",
+						"scm/resourceGroup/context",
+						"scm/resourceFolder/context",
+						"scm/resourceState/context",
+						"terminal/title/context",
+						"terminal/context",
+						"timeline/title",
+						"timeline/item/context",
+						"view/title",
+						"view/item/context",
+						"webview/context"
+					]
+				},
+				{
+					"type": "string",
+					"pattern": "^gitlens/.+$"
+				}
+			]
+		}
+	}
+}
