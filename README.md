@@ -1,3 +1,4 @@
 # gitlens-chinese
 ## gitlens部分中文翻译
-gitlens版本 17.0.3
+使用AI翻译，gitlens版本 17.0.3
+替换相应文件即可使用。
